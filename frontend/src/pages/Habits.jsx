@@ -315,7 +315,7 @@ export default function Habits() {
       </div>
 
       {/* Keyboard shortcut hint */}
-      <div className="kbd-hints animate-fade" style={{ animationDelay: '40ms' }}>
+      <div className="kbd-hints animate-fade">
         <span className="kbd-hint"><kbd>N</kbd> New habit</span>
         <span className="kbd-hint"><kbd>S</kbd> Search</span>
         <span className="kbd-hint"><kbd>Esc</kbd> Clear</span>
@@ -323,7 +323,7 @@ export default function Habits() {
 
       {/* Progress + Grade row */}
       {habits.length > 0 && (
-        <div className="progress-grade-row animate-fade" style={{ animationDelay: '60ms' }}>
+        <div className="progress-grade-row animate-fade">
           <div className="progress-section" style={{ flex: 1 }}>
             <div className="progress-header">
               <span>Today's Progress</span>
@@ -352,14 +352,14 @@ export default function Habits() {
 
       {/* Quote */}
       {habits.length > 0 && (
-        <div className="quote-bar animate-fade" style={{ animationDelay: '100ms' }}>
+        <div className="quote-bar animate-fade">
           "{quote}"
         </div>
       )}
 
       {/* Search + Filter bar */}
       {habits.length > 0 && (
-        <div className="search-filter-bar animate-fade" style={{ animationDelay: '120ms' }}>
+        <div className="search-filter-bar animate-fade">
           <div className="search-input-wrap">
             <Search size={15} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
             <input
@@ -411,7 +411,7 @@ export default function Habits() {
       ) : (
         <div className="habits-list">
           {pending.map((habit, i) => (
-            <div key={habit._id} className="animate-fade" style={{ animationDelay: `${i * 50}ms` }}>
+            <div key={habit._id} className="animate-fade">
               <HabitCard habit={habit} onToggle={handleToggleClick} onEdit={h => { setEditingHabit(h); setModalOpen(true); }}
                 onDelete={handleDelete} onArchive={handleArchive} onViewHistory={setHistoryHabit}
                 toggling={toggling} isNew={habit._id === newHabitId} />
@@ -422,7 +422,7 @@ export default function Habits() {
             <>
               {pending.length > 0 && <div className="section-divider">Completed today ✓</div>}
               {completed.map((habit, i) => (
-                <div key={habit._id} className="animate-fade" style={{ animationDelay: `${(pending.length + i) * 50}ms` }}>
+                <div key={habit._id} className="animate-fade">
                   <HabitCard habit={habit} onToggle={handleToggleClick} onEdit={h => { setEditingHabit(h); setModalOpen(true); }}
                     onDelete={handleDelete} onArchive={handleArchive} onViewHistory={setHistoryHabit}
                     toggling={toggling} isNew={false} />

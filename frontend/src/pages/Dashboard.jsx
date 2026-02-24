@@ -19,7 +19,7 @@ const STAT_CONFIGS = [
 ];
 
 const StatCard = ({ icon: Icon, label, value, suffix = '', color, bg, delay = 0 }) => (
-  <div className="stat-card animate-fade" style={{ animationDelay: `${delay}ms`, '--card-color': color }}>
+  <div className="stat-card animate-fade" style={{ '--card-color': color }}>
     <div className="stat-icon" style={{ background: bg, color }}>
       <Icon size={20} />
     </div>
@@ -131,14 +131,14 @@ export default function Dashboard() {
       {/* Stats */}
       <div className="stats-grid">
         {statValues.map((s, i) => (
-          <StatCard key={s.key} {...s} delay={i * 60} />
+          <StatCard key={s.key} {...s} />
         ))}
       </div>
 
       {/* Charts */}
       <div className="charts-row">
         {/* Weekly bar chart */}
-        <div className="chart-card animate-fade" style={{ animationDelay: '200ms' }}>
+        <div className="chart-card animate-fade">
           <div className="chart-header">
             <h2>Weekly Progress</h2>
             <span className="chart-subtitle">Completion % by day</span>
@@ -176,7 +176,7 @@ export default function Dashboard() {
         </div>
 
         {/* 30-day area chart */}
-        <div className="chart-card animate-fade" style={{ animationDelay: '260ms' }}>
+        <div className="chart-card animate-fade">
           <div className="chart-header">
             <h2>30-Day Trend</h2>
             <span className="chart-subtitle">Completions over time</span>
@@ -213,7 +213,7 @@ export default function Dashboard() {
 
       {/* Streak leaderboard */}
       {habitStats.length > 0 && (
-        <div className="card animate-fade" style={{ animationDelay: '320ms' }}>
+        <div className="card animate-fade">
           <div className="chart-header" style={{ marginBottom: 18 }}>
             <h2>🏆 Habit Streaks</h2>
             <Link to="/habits" className="btn btn-ghost btn-sm">Manage <ArrowRight size={14} /></Link>
@@ -241,7 +241,7 @@ export default function Dashboard() {
 
       {/* Badges */}
       {overview.totalHabits > 0 && (
-        <div className="card animate-fade" style={{ animationDelay: '380ms' }}>
+        <div className="card animate-fade">
           <div className="chart-header" style={{ marginBottom: 18 }}>
             <h2>🏅 Achievements</h2>
             <span className="chart-subtitle">Earn badges by building streaks</span>
@@ -258,7 +258,7 @@ export default function Dashboard() {
 
       {/* Empty */}
       {overview.totalHabits === 0 && (
-        <div className="card animate-fade" style={{ animationDelay: '200ms', textAlign: 'center', background: 'linear-gradient(135deg, rgba(108,99,255,0.08), rgba(249,83,198,0.05))' }}>
+        <div className="card animate-fade" style={{ textAlign: 'center', background: 'linear-gradient(135deg, rgba(108,99,255,0.08), rgba(249,83,198,0.05))' }}>
           <div className="empty-state">
             <div style={{ fontSize: '4.5rem' }}>🚀</div>
             <h2>Ready to level up?</h2>

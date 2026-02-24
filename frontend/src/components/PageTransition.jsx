@@ -12,7 +12,7 @@ export default function PageTransition({ children }) {
       const t = setTimeout(() => {
         setDisplayLocation(location);
         setStage('enter');
-      }, 220);
+      }, 100); // was 220ms — now snappy
       return () => clearTimeout(t);
     }
   }, [location]);
@@ -21,8 +21,8 @@ export default function PageTransition({ children }) {
     <div
       style={{
         opacity: stage === 'exit' ? 0 : 1,
-        transform: stage === 'exit' ? 'translateY(10px)' : 'translateY(0)',
-        transition: 'opacity 0.22s ease, transform 0.22s ease',
+        transform: stage === 'exit' ? 'translateY(6px)' : 'translateY(0)',
+        transition: 'opacity 0.1s ease, transform 0.1s ease',
         width: '100%',
       }}
       key={displayLocation.pathname}
