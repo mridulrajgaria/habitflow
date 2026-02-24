@@ -13,10 +13,7 @@
 
 .habits-header h1 {
   font-size: 2rem;
-  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .habits-date {
@@ -28,24 +25,13 @@
 
 /* ===================== PROGRESS ===================== */
 .progress-section {
-  background: linear-gradient(135deg, rgba(108,99,255,0.12) 0%, rgba(249,83,198,0.08) 100%);
-  border: 1px solid rgba(108,99,255,0.25);
+  background: linear-gradient(135deg, rgba(108,99,255,0.1) 0%, rgba(249,83,198,0.07) 100%);
+  border: 1px solid rgba(108,99,255,0.2);
   border-radius: var(--radius-lg);
   padding: 22px 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  position: relative;
-  overflow: hidden;
-}
-
-.progress-section::before {
-  content: '';
-  position: absolute;
-  top: -40px; right: -40px;
-  width: 120px; height: 120px;
-  background: radial-gradient(circle, rgba(108,99,255,0.2), transparent 70%);
-  pointer-events: none;
 }
 
 .progress-header {
@@ -69,7 +55,7 @@
 
 .progress-bar-track {
   height: 10px;
-  background: rgba(255,255,255,0.06);
+  background: var(--border);
   border-radius: 5px;
   overflow: hidden;
 }
@@ -114,7 +100,7 @@
 /* ===================== QUOTE ===================== */
 .quote-bar {
   text-align: center;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   font-size: 0.875rem;
   font-style: italic;
   padding: 4px 0;
@@ -149,31 +135,22 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  transition: all 0.25s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   position: relative;
   overflow: hidden;
-}
-
-.habit-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 60%);
-  pointer-events: none;
 }
 
 .habit-card:hover {
   border-color: var(--border-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
 .habit-card.completed {
-  opacity: 0.55;
-  border-color: rgba(0,229,160,0.15);
+  opacity: 0.6;
 }
 
-.habit-card.completed:hover { opacity: 0.75; }
+.habit-card.completed:hover { opacity: 0.8; }
 
 .habit-card-left {
   display: flex;
@@ -197,25 +174,12 @@
   flex-shrink: 0;
   transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   color: white;
-  position: relative;
-}
-
-.check-btn::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  background: var(--habit-color, var(--accent));
-  opacity: 0;
-  transition: opacity 0.2s;
 }
 
 .check-btn:hover:not(:disabled) {
-  background: rgba(255,255,255,0.08);
   transform: scale(1.12);
+  background: rgba(108,99,255,0.1);
 }
-
-.check-btn:hover:not(:disabled)::before { opacity: 0.1; }
 
 .check-btn.checked {
   background: var(--habit-color, var(--accent));
@@ -250,7 +214,7 @@
 
 .habit-desc {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -307,7 +271,11 @@
   font-size: 0.8rem;
   color: var(--text-secondary);
   font-weight: 600;
-  animation: scaleIn 0.2s ease;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px 8px;
+  animation: scaleIn 0.15s ease;
 }
 
 /* ===================== ERROR STATE ===================== */
@@ -326,7 +294,6 @@
   .habits-header h1 { font-size: 1.5rem; }
 }
 
-/* New habit bounce-in animation */
 @keyframes bounceIn {
   0%   { opacity: 0; transform: scale(0.6) translateY(-20px); }
   60%  { opacity: 1; transform: scale(1.06) translateY(0); }
@@ -335,7 +302,7 @@
 }
 
 .habit-card-new {
-  animation: bounceIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+  animation: bounceIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
   border-color: rgba(108,99,255,0.5) !important;
   box-shadow: 0 0 20px rgba(108,99,255,0.2) !important;
 }
@@ -350,7 +317,7 @@
 }
 
 .habit-card {
-  border-left: none !important; /* remove old border, use color bar instead */
+  border-left: none !important;
 }
 
 /* ===================== STREAK BADGE ===================== */
@@ -384,7 +351,6 @@
   min-width: 90px;
   flex-shrink: 0;
   text-align: center;
-  transition: all 0.2s;
 }
 
 .grade-value {
@@ -421,7 +387,7 @@
   align-items: center;
   gap: 10px;
   background: var(--bg-card);
-  border: 1.5px solid var(--border-light);
+  border: 1.5px solid var(--border);
   border-radius: var(--radius);
   padding: 10px 14px;
   transition: border-color 0.2s;
@@ -451,8 +417,8 @@
 }
 
 .filter-pill {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border-light);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 5px 12px;
   font-size: 0.75rem;
@@ -470,7 +436,7 @@
 }
 
 .filter-pill.active {
-  background: rgba(108,99,255,0.18);
+  background: var(--accent);
   border-color: var(--accent);
   color: white;
 }
@@ -492,14 +458,13 @@
 }
 
 kbd {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
   border-radius: 5px;
   padding: 1px 6px;
   font-size: 0.68rem;
   font-family: monospace;
   color: var(--text-secondary);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.1);
 }
 
 /* ===================== FLAME PULSE ===================== */

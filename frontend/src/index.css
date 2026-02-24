@@ -511,9 +511,9 @@ textarea { resize: vertical; min-height: 80px; }
   100% { background-position: 200% center; }
 }
 
-.animate-fade { animation: fadeIn 0.18s ease forwards; }
-.animate-slide { animation: slideIn 0.15s ease forwards; }
-.animate-scale { animation: scaleIn 0.15s ease forwards; }
+.animate-fade { animation: none; opacity: 1; }
+.animate-slide { animation: none; opacity: 1; }
+.animate-scale { animation: none; opacity: 1; }
 .animate-pop { animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
 
 /* ===================== MODAL ===================== */
@@ -526,8 +526,7 @@ textarea { resize: vertical; min-height: 80px; }
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
-  animation: fadeIn 0.2s ease;
+  padding: 16px;
   overflow-y: auto;
 }
 
@@ -535,12 +534,11 @@ textarea { resize: vertical; min-height: 80px; }
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xl);
-  padding: 28px;
+  padding: 24px;
   width: 100%;
-  max-width: 460px;
-  max-height: calc(100dvh - 40px); /* never taller than screen */
-  overflow-y: auto;               /* scroll inside modal if needed */
-  animation: scaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 440px;
+  max-height: 90dvh;
+  overflow-y: auto;
   box-shadow: var(--shadow-lg), 0 0 60px rgba(108,99,255,0.1);
   position: relative;
   margin: auto;
@@ -548,11 +546,11 @@ textarea { resize: vertical; min-height: 80px; }
 }
 
 @media (max-width: 480px) {
-  .modal-overlay { padding: 12px; }
+  .modal-overlay { padding: 10px; align-items: center; }
   .modal {
-    padding: 20px 16px;
+    padding: 18px 14px;
     border-radius: var(--radius-lg);
-    max-height: calc(100dvh - 24px);
+    max-height: 92dvh;
   }
 }
 
