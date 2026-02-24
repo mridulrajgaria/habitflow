@@ -1,31 +1,91 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Sparkles, Eye, EyeOff, ArrowRight } from 'lucide-react';
+import { Sparkles, Eye, EyeOff, ArrowRight, Check, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { RegisterIllustration } from '../components/Illustrations';
 import HabitFlowLogo from '../components/HabitFlowLogo';
 import './Auth.css';
 
+
+const RULES = [
+  { id: 'length', label: 'At least 8 characters',     test: p => p.length >= 8 },
+  { id: 'upper',  label: 'One uppercase letter (A-Z)', test: p => /[A-Z]/.test(p) },
+  { id: 'lower',  label: 'One lowercase letter (a-z)', test: p => /[a-z]/.test(p) },
+  { id: 'number', label: 'One number (0-9)',            test: p => /[0-9]/.test(p) },
+];
+
+function PasswordStrength({ password }) {
+  const passed = RULES.filter(r => r.test(password)).length;
+  const colors = ['#ff4d6d', '#ff7849', '#ffd60a', '#00e5a0'];
+  const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+  if (!password) return null;
+  return (
+    <div className="pw-strength animate-fade">
+      <div className="pw-bar-track">
+        {[0,1,2,3].map(i => (
+          <div key={i} className="pw-bar-seg"
+            style={{ background: i < passed ? colors[passed-1] : 'rgba(255,255,255,0.08)', transition: 'background 0.3s' }} />
+        ))}
+      </div>
+      {passed > 0 && <span className="pw-label" style={{ color: colors[passed-1] }}>{labels[passed-1]}</span>}
+      <div className="pw-rules">
+        {RULES.map(rule => {
+          const ok = rule.test(password);
+          return (
+            <div key={rule.id} className={`pw-rule ${ok ? 'ok' : 'fail'}`}>
+              {ok ? <Check size={11} strokeWidth={3} style={{ color: '#00e5a0' }} /> : <X size={11} strokeWidth={3} style={{ color: '#ff4d6d' }} />}
+              <span>{rule.label}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default function Register() {
   const [form, setForm]               = useState({ name: '', email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading]         = useState(false);
-  const [error, setError]             = useState('');
+  const [errors, setErrors]           = useState([]);
   const { register } = useAuth();
   const toast        = useToast();
   const navigate     = useNavigate();
 
+  const validatePassword = (pw) => {
+    const errs = [];
+    if (pw.length < 8)         errs.push('At least 8 characters');
+    if (!/[A-Z]/.test(pw))    errs.push('At least one uppercase letter (A-Z)');
+    if (!/[a-z]/.test(pw))    errs.push('At least one lowercase letter (a-z)');
+    if (!/[0-9]/.test(pw))    errs.push('At least one number (0-9)');
+    return errs;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); setLoading(true);
+    setErrors([]);
+
+    // Client-side validation — show ALL issues at once
+    const pwErrors = validatePassword(form.password);
+    if (pwErrors.length > 0) {
+      setErrors(pwErrors);
+      return;
+    }
+
+    setLoading(true);
     try {
       await register(form.name, form.email, form.password);
       toast.success('Account created! Let\'s build some habits 🌱');
       navigate('/habits');
     } catch (err) {
-      const msg = err.response?.data?.errors?.[0]?.msg || err.response?.data?.error || 'Registration failed.';
-      setError(msg);
+      // Server errors — could be multiple validation errors
+      const serverErrors = err.response?.data?.errors;
+      if (serverErrors && serverErrors.length > 0) {
+        setErrors(serverErrors.map(e => e.msg));
+      } else {
+        setErrors([err.response?.data?.error || 'Registration failed. Please try again.']);
+      }
     } finally { setLoading(false); }
   };
 
@@ -46,7 +106,16 @@ export default function Register() {
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form">
-            {error && <div className="auth-error animate-fade">{error}</div>}
+            {errors.length > 0 && (
+              <div className="auth-error animate-fade">
+                {errors.length === 1
+                  ? <span>{errors[0]}</span>
+                  : <ul className="auth-error-list">
+                      {errors.map((e, i) => <li key={i}>✗ {e}</li>)}
+                    </ul>
+                }
+              </div>
+            )}
 
             <div className="form-group">
               <label htmlFor="name">Full Name</label>
@@ -74,6 +143,7 @@ export default function Register() {
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
+              <PasswordStrength password={form.password} />
             </div>
 
             <button type="submit" className="btn btn-primary"

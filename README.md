@@ -2,7 +2,7 @@
 
 A full-stack habit tracking application built with the **MERN stack** (MongoDB, Express, React, Node.js).
 
-**Live Demo:** https://your-deployed-url.com *(replace after deployment)*
+**Live Demo:** https://habitflow-opal.vercel.app
 
 ---
 
@@ -122,7 +122,7 @@ habitflow/
 ### Option A: Docker (Easiest — everything included)
 
 ```bash
-git clone https://github.com/your-username/habitflow.git
+git clone https://github.com/mridulrajgaria/habitflow.git
 cd habitflow
 
 docker-compose up --build
