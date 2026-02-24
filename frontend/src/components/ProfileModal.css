@@ -1,0 +1,116 @@
+.profile-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.profile-drop-zone {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border: 3px solid var(--border-light);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.profile-drop-zone:hover { border-color: var(--accent); transform: scale(1.03); }
+.profile-drop-zone.drag-over { border-color: var(--pink); transform: scale(1.05); box-shadow: 0 0 20px var(--pink-glow); }
+
+.profile-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-initials-large {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--pink), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: white;
+}
+
+.profile-drop-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s;
+  backdrop-filter: blur(2px);
+}
+
+.profile-drop-zone:hover .profile-drop-overlay,
+.profile-drop-zone.drag-over .profile-drop-overlay {
+  opacity: 1;
+}
+
+.profile-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.profile-info {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 14px;
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.profile-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.profile-email {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.profile-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Compression info */
+.compress-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  background: rgba(0,229,160,0.08);
+  border: 1px solid rgba(0,229,160,0.2);
+  border-radius: 20px;
+  padding: 5px 12px;
+}
+
+.compress-info b { color: var(--green); }
+
+/* Compressing state */
+.profile-drop-zone.compressing { cursor: wait; opacity: 0.8; }
+.profile-drop-zone.compressing .profile-drop-overlay { opacity: 1; }

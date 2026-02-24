@@ -1,0 +1,515 @@
+.habits-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.habits-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.habits-header h1 {
+  font-size: 2rem;
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.habits-date {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* ===================== PROGRESS ===================== */
+.progress-section {
+  background: linear-gradient(135deg, rgba(108,99,255,0.12) 0%, rgba(249,83,198,0.08) 100%);
+  border: 1px solid rgba(108,99,255,0.25);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-section::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(108,99,255,0.2), transparent 70%);
+  pointer-events: none;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.progress-fraction {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, var(--pink), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.progress-bar-track {
+  height: 10px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--accent), var(--cyan));
+  border-radius: 5px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: shimmer 2s infinite;
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.all-done-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(0,229,160,0.1);
+  border: 1px solid rgba(0,229,160,0.25);
+  border-radius: var(--radius);
+  color: var(--green);
+  font-size: 0.875rem;
+  font-weight: 700;
+  animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ===================== QUOTE ===================== */
+.quote-bar {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-style: italic;
+  padding: 4px 0;
+  font-weight: 500;
+}
+
+/* ===================== HABITS LIST ===================== */
+.habits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.section-divider {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  font-weight: 700;
+  padding: 10px 0 4px;
+  border-top: 1px solid var(--border);
+  margin-top: 6px;
+}
+
+/* ===================== HABIT CARD ===================== */
+.habit-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.habit-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.habit-card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.habit-card.completed {
+  opacity: 0.55;
+  border-color: rgba(0,229,160,0.15);
+}
+
+.habit-card.completed:hover { opacity: 0.75; }
+
+.habit-card-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ===================== CHECK BUTTON ===================== */
+.check-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2.5px solid var(--habit-color, var(--accent));
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: white;
+  position: relative;
+}
+
+.check-btn::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--habit-color, var(--accent));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.check-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.08);
+  transform: scale(1.12);
+}
+
+.check-btn:hover:not(:disabled)::before { opacity: 0.1; }
+
+.check-btn.checked {
+  background: var(--habit-color, var(--accent));
+  border-color: var(--habit-color, var(--accent));
+  animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 14px var(--habit-color, var(--accent));
+}
+
+.check-btn.toggling { opacity: 0.6; cursor: wait; }
+
+/* ===================== HABIT INFO ===================== */
+.habit-info { flex: 1; min-width: 0; }
+
+.habit-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.habit-emoji { font-size: 1.1rem; flex-shrink: 0; }
+
+.habit-title {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-body);
+}
+
+.habit-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 5px;
+}
+
+.habit-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.habit-category {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.habit-done-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.7rem;
+  color: var(--green);
+  font-weight: 700;
+}
+
+.habit-note-preview {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-style: italic;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===================== ACTIONS ===================== */
+.habit-card-right { flex-shrink: 0; }
+
+.habit-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.delete-confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  animation: scaleIn 0.2s ease;
+}
+
+/* ===================== ERROR STATE ===================== */
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  padding: 70px 24px;
+}
+
+@media (max-width: 480px) {
+  .habit-card { padding: 14px 14px; }
+  .habits-header { flex-wrap: wrap; }
+  .habits-header h1 { font-size: 1.5rem; }
+}
+
+/* New habit bounce-in animation */
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: scale(0.6) translateY(-20px); }
+  60%  { opacity: 1; transform: scale(1.06) translateY(0); }
+  80%  { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+.habit-card-new {
+  animation: bounceIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+  border-color: rgba(108,99,255,0.5) !important;
+  box-shadow: 0 0 20px rgba(108,99,255,0.2) !important;
+}
+
+/* ===================== COLOR GLOW BAR ===================== */
+.habit-color-bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 14px 0 0 14px;
+  opacity: 0.9;
+}
+
+.habit-card {
+  border-left: none !important; /* remove old border, use color bar instead */
+}
+
+/* ===================== STREAK BADGE ===================== */
+.habit-streak-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #f59e0b;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 20px;
+  padding: 1px 7px;
+}
+
+/* ===================== GRADE CARD ===================== */
+.progress-grade-row {
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.grade-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 90px;
+  flex-shrink: 0;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.grade-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.grade-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.grade-msg {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* ===================== SEARCH + FILTER ===================== */
+.search-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  transition: border-color 0.2s;
+}
+
+.search-input-wrap:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
+}
+
+.search-input {
+  background: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  flex: 1;
+  width: 100%;
+}
+
+.filter-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font-body);
+}
+
+.filter-pill:hover {
+  background: rgba(108,99,255,0.1);
+  border-color: rgba(108,99,255,0.3);
+  color: var(--text-primary);
+}
+
+.filter-pill.active {
+  background: rgba(108,99,255,0.18);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ===================== KEYBOARD HINTS ===================== */
+.kbd-hints {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.kbd-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+
+kbd {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 0.68rem;
+  font-family: monospace;
+  color: var(--text-secondary);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+}
+
+/* ===================== FLAME PULSE ===================== */
+@keyframes flamePulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.2) rotate(-5deg); }
+}
+
+@media (max-width: 600px) {
+  .progress-grade-row { flex-direction: column; }
+  .grade-card { flex-direction: row; gap: 12px; min-width: unset; }
+  .kbd-hints { display: none; }
+}
